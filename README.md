@@ -44,7 +44,7 @@ behind the scenes for you (which is my preferred way in case of github provided
   Dockerfiles):
 
 ```Shell
-docker build -t mysqldb github.com/alex-docker/mysql
+docker build -t mysql github.com/alex-docker/mysql
 ```
 
 Now you have an image named *mysqldb* on your system, capable to
@@ -63,7 +63,7 @@ It will create a running container on your system providing a MySQL server.
 If you want to run your database on a different port than 3306 just do the following:
 
 ```Shell
-docker run -d -p 4407:3306 mysqldb
+docker run -d -p 4407:3306 mysql
 ```
 
 to run it on port 4407 (for instance). You can figure out that the container is running
@@ -76,7 +76,7 @@ and docker returns an output like that.
 
 ```Shell
 CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                    NAMES
-85fbad3eb5ce        mysqldb:latest      "/usr/local/bin/star   56 minutes ago      Up 55 minutes       0.0.0.0:3306->3306/tcp   focused_lalande
+85fbad3eb5ce        mysql:latest      "/usr/local/bin/star   56 minutes ago      Up 55 minutes       0.0.0.0:3306->3306/tcp   focused_lalande
 ```
 
 To check whether the database is working, you can connect to it.
@@ -128,7 +128,7 @@ This file can be hosted anywhere (accessible from your docker host).
 __Attention!__ SQL file is assumed to be encoded as UTF8 and has to valid as well as non interactively processable by mysql.
 
 ```Shell
-docker run -d -p 3306:3306 -e url="http://www.example.org/my/database.sql" mysqldb
+docker run -d -p 3306:3306 -e url="http://www.example.org/my/database.sql" mysql
 ```
 
 ### Define user with <code>user</code> and <code>password</code>###
@@ -138,7 +138,7 @@ You can create your own user/password combination by using the <code>user</code>
 By default the created MySQL user will get read access to all databases hosted by this container.
 
 ```Shell
-docker run -d -p 3306:3306 -e user="root" -e password="root" mysqldb
+docker run -d -p 3306:3306 -e user="root" -e password="root" mysql
 ```
 
 ### Change access rights with <code>right</code>###
@@ -164,14 +164,14 @@ with the database including
 The read access right is the default one. So
 
 ```Shell
-docker run -d -p 3306:3306 -e right="READ" mysqldb
+docker run -d -p 3306:3306 -e right="READ" mysql
 ```
 
 is synonym to
 
 
 ```Shell
-docker run -d -p 3306:3306 mysqldb
+docker run -d -p 3306:3306 mysql
 ```
 
 Read access is perfect for providing read-only datasets. E.g. databases for students
@@ -182,7 +182,7 @@ If you want to create a user with complete write access to your database
 you can run something like that
 
 ```Shell
-docker run -d -p 3306:3306 -e user="Me" -e password="mine" -e right="WRITE" mysqldb
+docker run -d -p 3306:3306 -e user="Me" -e password="mine" -e right="WRITE" mysql
 ```
 
 which will provide __full access__ to the database for user *Me*.
@@ -207,5 +207,5 @@ with the <code>-t</code> and <code>-i</code> parameter of docker. This will forw
 to your console, which is likely to be helpful for debugging purposes.
 
 ```Shell
-docker run -t -i -p 3306:3306 -e url="http://www.ex.org/my/database.sql" mysqldb
+docker run -t -i -p 3306:3306 -e url="http://www.ex.org/my/database.sql" mysql
 ```
